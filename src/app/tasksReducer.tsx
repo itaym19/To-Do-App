@@ -1,11 +1,18 @@
-import { error } from "console";
 import { Task } from "./ToDo";
 
-interface taskAction {
+export const actions = {
+  taskAdd: "added",
+  taskChange: "changed",
+  taskDelete: "deleted",
+};
+
+export interface taskAction {
   type: string;
-  id: number;
-  name?: string;
-  task?: Task;
+  payload: {
+    id: number;
+    name?: string;
+    task?: Task;
+  };
 }
 
 export default function tasksReducer(
@@ -13,34 +20,34 @@ export default function tasksReducer(
   action: taskAction
 ): Task[] {
   switch (action.type) {
-    case "added": {
+    case actions.taskAdd: {
       return [
         ...tasks,
         {
-          id: action.id,
-          name: action.name ? action.name : "",
+          id: action.payload.id,
+          name: action.payload.name ? action.payload.name : "",
           status: "To Do",
         },
       ];
     }
 
-    case "changed": {
+    case actions.taskChange: {
       return tasks.map((t) => {
-        if (t.id === action.id && action.task) {
-          return action.task;
+        if (t.id === action.payload.id && action.payload.task) {
+          return action.payload.task;
         }
         return t;
       });
     }
 
-    case "deleted": {
+    case actions.taskDelete: {
       return tasks.filter((t) => {
-        return t.id !== action.id;
+        return t.id !== action.payload.id;
       });
     }
 
     default: {
-      throw error(`unknown action ${action.type}`);
+      return tasks;
     }
   }
 }

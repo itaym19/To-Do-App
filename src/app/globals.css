@@ -1,1 +1,23 @@
 @import "tailwindcss";
+.app {
+  background-color: rgb(49, 42, 42);
+  color: white;
+}
+
+.toDo {
+  background-color: rgb(255, 0, 0);
+  font: 1em sans-serif;
+}
+
+.inProgress {
+  background-color: yellow;
+}
+
+.done {
+  background-color: rgb(7, 155, 7);
+}
+
+.center {
+  flex-direction: column;
+  place-items: center;
+}

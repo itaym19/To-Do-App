@@ -9,23 +9,29 @@ export interface Task {
 
 interface toDoProps {
   task: Task;
+  taskAdd(text: string): void;
+  taskChange(task: Task): void;
+  taskDelete(id: number): void;
 }
 
-const ToDo = ({ task }: toDoProps) => {
+const ToDo = ({ task, taskAdd, taskChange, taskDelete }: toDoProps) => {
   const [myTask, setMyTask] = useState<Task>({
     name: task.name,
     id: task.id,
     status: task.status,
   });
-  type taskTemplate = {
-    name: string;
-    id: number;
-    status: string;
-  };
+  const [canEdit, setCanEdit] = useState<boolean>(false);
 
   return (
     <div>
-      Text: <input type="text" value={myTask.name} /> <br />
+      Text:{" "}
+      <input
+        type="text"
+        value={myTask.name}
+        onChange={(e) => setMyTask({ ...myTask, name: e.target.value })}
+      />{" "}
+      <button> Edit </button>
+      <br />
     </div>
   );
 };
